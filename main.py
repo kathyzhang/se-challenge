@@ -66,9 +66,10 @@ def fileMainPage(filename):
 
 @app.route('/uploads/report', methods=['GET'])
 def monthlyExpenseReport():
-    monthlyExpenses = generateMonthlyExpense()
+    #monthlyExpenses =
+    generateMonthlyExpense()
     return render_template('monthlyExpense.html',
-                           monthlyExpenses=monthlyExpenses, style1=CSS_UNSELECT, style2=CSS_SELECT)
+                           monthlyExpenses=company.monthlyExpenses, style1=CSS_UNSELECT, style2=CSS_SELECT)
 
 
 @app.route('/graph')
@@ -143,15 +144,15 @@ def generateMonthlyExpense():
         .group_by(func.date_trunc('month', Expense.date))\
         .order_by('month')
 
-    monthlyExpenses = []
+    #monthlyExpenses = []
     company.monthlyExpenses = []
     for row in result.all():
         company.monthlyExpenses.append(
             MonthlyExpense(formatMonth(row.month), row.pre_tax, row.tax))
 
-        monthlyExpenses.append(
-            MonthlyExpense(formatMonth(row.month), row.pre_tax, row.tax))
-    return monthlyExpenses
+        #monthlyExpenses.append(
+            #MonthlyExpense(formatMonth(row.month), row.pre_tax, row.tax))
+    #return monthlyExpenses
 
 
 def formatMonth(date):
